@@ -2,6 +2,8 @@
 from dash import Dash, html
 # Import for bootstrap CSS
 import dash_bootstrap_components as dbc
+# import template for flask
+from flask import render_template
 
 # Variable that defines the meta tag for the viewport
 meta_tags = [
