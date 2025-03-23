@@ -1,7 +1,5 @@
 import os
-
 from flask import Flask
-
 
 def create_app(test_config=None):
     # create the Flask app
@@ -10,14 +8,8 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='KZV2j_zNgIxuXIFW-d1VLg',
         # Set the location of the database file called paralympics.sqlite which will be in the app's instance folder
-        SQLALCHEMY_DATABASE_URI= "sqlite:///" + os.path.join(app.instance_path, 'paralympics.sqlite'),  
+        DATABASE=os.path.join(app.instance_path, 'paralympics.sqlite'),  
     )
-
-    with app.app_context():
-        # Register the main blueprint
-        from student.flask_paralympics.routes import main
-
-        app.register_blueprint(main)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -31,5 +23,12 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    # Put the following code inside the create_app function
+    with app.app_context():
+        # Register the blueprint
+        from student.flask_paralympics.routes import main
+
+        app.register_blueprint(main)
 
     return app
