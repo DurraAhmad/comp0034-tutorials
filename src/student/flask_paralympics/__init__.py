@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from . import db
 
 def create_app(test_config=None):
     # create the Flask app
@@ -28,7 +29,8 @@ def create_app(test_config=None):
     with app.app_context():
         # Register the blueprint
         from student.flask_paralympics.routes import main
-
         app.register_blueprint(main)
+    
+    db.init_app(app)
 
     return app
